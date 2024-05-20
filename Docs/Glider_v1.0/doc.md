@@ -88,41 +88,41 @@ Unline most arduino based DIY projects, the use of Jumper / dupont wires may oft
 
 The following table describes which of the ESP32 GPIO pins are allocated to the onboard peripherals, however one can refer to the [Diagram based pinout](/Image_assets/roboboard_pinout.png) for convenience
 
-|   ESP32 pin in ESP-IDF   |   Arduino.h pin |   Peripheral  |  
+|   ESP32 pin in ESP-IDF   |    Peripheral  |  3.3V to 5V Translation  |
 |   ---------------------   |   ---------------------   |   ----------  |
 <br/><span style="font-weight:bold;font-size:1.15em">Motor Driver (TB6612FNG)</span>
-|   ```GPIO_NUM_26```  |  | AIN1 (TB6612FNG) |
-|   ```GPIO_NUM_25```  |  | AIN2 (TB6612FNG) |
-|   ```GPIO_NUM_32```  |  | BIN2 (TB6612FNG) |
-|   ```GPIO_NUM_33```  |  | BIN1 (TB6612FNG) |
-|   ```GPIO_NUM_19```  |  | PWMA (TB6612FNG) |
-|   ```GPIO_NUM_18```  |  | PWMB (TB6612FNG) |
-<br/> <span style="font-weight:bold;font-size:1.15em">Line Sensor Adapter Board</span>
-|   ```GPIO_NUM_27```  |  | LOAD_PIN (Adapter)
-|   ```GPIO_NUM_4```   |  | CLOCK_ENABLE_PIN (Adapter)
-|   ```GPIO_NUM_17```  |  | DATA_PIN (Adapter)
-|   ```GPIO_NUM_16```  |  | CLOCK_PIN (Adapter)
+|   ```GPIO_NUM_26```  | AIN1 | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_25```  | AIN2 | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057) 
+|   ```GPIO_NUM_32```  | BIN2 | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_33```  | BIN1 | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_19```  | PWMA | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_18```  | PWMB | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+<br/> <span style="font-weight:bold;font-size:1.15em">Line Sensor Adapter connectivity port</span>
+|   ```GPIO_NUM_27```  | LOAD_PIN           | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057) 
+|   ```GPIO_NUM_4```   | CLOCK_ENABLE_PIN   | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_17```  | DATA_PIN           | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_16```  | CLOCK_PIN          | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
 <br/>
-|   ```GPIO_NUM_2```   |  | BLUE_LED (On board LED)
-<br/> <span style="font-weight:bold;font-size:1.15em">Indication Board</span>
-|   ```GPIO_NUM_12```  |  | BUZZER (Indication Board)
-|   ```GPIO_NUM_23```  |  | NEOPIXEL_LED_PIN (Indication Board)
-<br/> <span style="font-weight:bold;font-size:1.15em">GUI Board</span>
-|   ```GPIO_NUM_36```  |  | BUTTON_LEFT
-|   ```GPIO_NUM_39```  |  | BUTTON_RIGHT
-|   ```GPIO_NUM_34```  |  | BUTTON_TOP
-|   ```GPIO_NUM_35```  |  | BUTTON_BOTTOM
-<br/> <span style="font-weight:bold;font-size:1.15em">Encoders</span>
-|   ```GPIO_NUM_15```  |  | LEFT_MOTOR_ENC_A ( Encoder ) 
-|   ```GPIO_NUM_5```   |  | LEFT_MOTOR_ENC_B ( Encoder )
-|   ```GPIO_NUM_13```  |  | RIGHT_MOTOR_ENC_A ( Encoder )
-|   ```GPIO_NUM_14```  |  | RIGHT_MOTOR_ENC_B ( Encoder )
+|   ```GPIO_NUM_2```   | BLUE_LED | ![No](https://img.icons8.com/?size=20&id=59754&format=png&color=FA5252)
+<br/> <span style="font-weight:bold;font-size:1.15em">Indication Board connectivity port</span>
+|   ```GPIO_NUM_12```  | BUZZER             | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_23```  | NEOPIXEL_LED_PIN   | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+<br/> <span style="font-weight:bold;font-size:1.15em">GUI Board connectivity port</span>
+|   ```GPIO_NUM_36```  | BUTTON_LEFT    | ![No](https://img.icons8.com/?size=20&id=59754&format=png&color=FA5252)        
+|   ```GPIO_NUM_39```  | BUTTON_RIGHT   | ![No](https://img.icons8.com/?size=20&id=59754&format=png&color=FA5252)       
+|   ```GPIO_NUM_34```  | BUTTON_TOP     | ![No](https://img.icons8.com/?size=20&id=59754&format=png&color=FA5252)       
+|   ```GPIO_NUM_35```  | BUTTON_BOTTOM  | ![No](https://img.icons8.com/?size=20&id=59754&format=png&color=FA5252)      
+<br/> <span style="font-weight:bold;font-size:1.15em">Encoders port</span>
+|   ```GPIO_NUM_15```  | LEFT_MOTOR_ENC_A   | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_5```   | LEFT_MOTOR_ENC_B   | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_13```  | RIGHT_MOTOR_ENC_A  | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_14```  | RIGHT_MOTOR_ENC_B  | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
 <br/> <span style="font-weight:bold;font-size:1.15em">I2C ports</span>
-|   ```GPIO_NUM_21```  |  | SDA_PIN (I2C)     
-|   ```GPIO_NUM_22```  |  | SCL_PIN (I2C)
+|   ```GPIO_NUM_21```  | SDA_PIN | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
+|   ```GPIO_NUM_22```  | SCL_PIN | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)
 <br/> <span style="font-weight:bold;font-size:1.15em">UART0 ( Serial0 )</span>
-|   ```GPIO_NUM_1```  |  | TXD_0 ( UART0 )     
-|   ```GPIO_NUM_3```  |  | RXD_0 ( UART0 )
+|   ```GPIO_NUM_1```  | TXD_0   | ![No](https://img.icons8.com/?size=20&id=59754&format=png&color=FA5252)
+|   ```GPIO_NUM_3```  | RXD_0   | ![No](https://img.icons8.com/?size=20&id=59754&format=png&color=FA5252)
 
 <br/>
 
