@@ -102,7 +102,7 @@ The following table describes which of the ESP32 GPIO pins are allocated to the 
 |   ```GPIO_NUM_4```   | CLOCK_ENABLE_PIN   | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)  |
 |   ```GPIO_NUM_17```  | DATA_PIN           | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)  |
 |   ```GPIO_NUM_16```  | CLOCK_PIN          | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)  |
-<br/>
+<br/> <span style="font-weight:bold;font-size:1.15em">On board peripherals</span>
 |   ```GPIO_NUM_2```   | BLUE_LED | ![No](https://img.icons8.com/?size=20&id=59754&format=png&color=FA5252) |
 <br/> <span style="font-weight:bold;font-size:1.15em">Indication Board connectivity port</span>
 |   ```GPIO_NUM_12```  | BUZZER             | ![Yes](https://img.icons8.com/?size=20&id=59755&format=png&color=40C057)  |
