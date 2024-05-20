@@ -84,6 +84,47 @@ The board has a push to On / Off switch for enabling / disabling the motor drive
 
 Unline most arduino based DIY projects, the use of Jumper / dupont wires may often lead to undesirable behavior as such connecting wires are prone to wearing out over multiple connections / disconnections. Japan Solderless Terminals (JST) connectors on the other hand are widely used in the industry, specially in most electronics based products due to their reliable nature. Leveraging this reliability and firm connectivity JST connectors are used throughout to allow firm connections as jumper wires are often fragile and wear out over time.
 
+## Roboboard ESP32 pin allocation table
+
+The following table describes which of the ESP32 GPIO pins are allocated to the onboard peripherals, however one can refer to the [Diagram based pinout](/Image_assets/roboboard_pinout.png) for convenience
+
+|   ESP32 pin in ESP-IDF   |   Arduino.h pin |   Peripheral  |  
+|   ---------------------   |   ---------------------   |   ----------  |
+<br/><span style="font-weight:bold;font-size:1.15em">Motor Driver (TB6612FNG)</span>
+|   ```GPIO_NUM_26```  |  | AIN1 (TB6612FNG) |
+|   ```GPIO_NUM_25```  |  | AIN2 (TB6612FNG) |
+|   ```GPIO_NUM_32```  |  | BIN2 (TB6612FNG) |
+|   ```GPIO_NUM_33```  |  | BIN1 (TB6612FNG) |
+|   ```GPIO_NUM_19```  |  | PWMA (TB6612FNG) |
+|   ```GPIO_NUM_18```  |  | PWMB (TB6612FNG) |
+<br/> <span style="font-weight:bold;font-size:1.15em">Line Sensor Adapter Board</span>
+|   ```GPIO_NUM_27```  |  | LOAD_PIN (Adapter)
+|   ```GPIO_NUM_4```   |  | CLOCK_ENABLE_PIN (Adapter)
+|   ```GPIO_NUM_17```  |  | DATA_PIN (Adapter)
+|   ```GPIO_NUM_16```  |  | CLOCK_PIN (Adapter)
+<br/>
+|   ```GPIO_NUM_2```   |  | BLUE_LED (On board LED)
+<br/> <span style="font-weight:bold;font-size:1.15em">Indication Board</span>
+|   ```GPIO_NUM_12```  |  | BUZZER (Indication Board)
+|   ```GPIO_NUM_23```  |  | NEOPIXEL_LED_PIN (Indication Board)
+<br/> <span style="font-weight:bold;font-size:1.15em">GUI Board</span>
+|   ```GPIO_NUM_36```  |  | BUTTON_LEFT
+|   ```GPIO_NUM_39```  |  | BUTTON_RIGHT
+|   ```GPIO_NUM_34```  |  | BUTTON_TOP
+|   ```GPIO_NUM_35```  |  | BUTTON_BOTTOM
+<br/> <span style="font-weight:bold;font-size:1.15em">Encoders</span>
+|   ```GPIO_NUM_15```  |  | LEFT_MOTOR_ENC_A ( Encoder ) 
+|   ```GPIO_NUM_5```   |  | LEFT_MOTOR_ENC_B ( Encoder )
+|   ```GPIO_NUM_13```  |  | RIGHT_MOTOR_ENC_A ( Encoder )
+|   ```GPIO_NUM_14```  |  | RIGHT_MOTOR_ENC_B ( Encoder )
+<br/> <span style="font-weight:bold;font-size:1.15em">I2C ports</span>
+|   ```GPIO_NUM_21```  |  | SDA_PIN (I2C)     
+|   ```GPIO_NUM_22```  |  | SCL_PIN (I2C)
+<br/> <span style="font-weight:bold;font-size:1.15em">UART0 ( Serial0 )</span>
+|   ```GPIO_NUM_1```  |  | TXD_0 ( UART0 )     
+|   ```GPIO_NUM_3```  |  | RXD_0 ( UART0 )
+
+<br/>
 
 ## 12 channel Line Sensor Array
 
@@ -95,21 +136,31 @@ Unline most arduino based DIY projects, the use of Jumper / dupont wires may oft
 
 <br/>
 
-This sensor array has 12 individual sensors that output either +5V / 0V (digital 1 / 0) depending on how white / black the surface beneath the sensor is. The threshold above which the sensor outputs 1, is adjusted by the corresponding potentiometer. This way the Line sensor array outputs a 12 bit digital data which looks somethings like : 
+This sensor array has 12 individual sensors that output either +5V / 0V (digital 1 / 0) depending on how white / black the surface beneath the sensor is. The threshold above which the sensor outputs 1, is adjusted by the corresponding potentiometer. This way the Line sensor array outputs a 12 bit digital data.
+
+Since the sensor ouputs 1 for a white surface and 0 for black surface, then sliding the sensor above a white line ( which is drawn above the black surface ), thick enough to cover 2 sensors, them the 12 bit output from the sensors looks something like : 
 
 ```
-0000110000000000
-0000011000000000
-0000001100000000
-0000000110000000
-0000000011000000
-0000000001100000
-0000000000110000
+001100000000
+000110000000
+000011000000
+000001100000
+000000110000
+000000011000
+000000001100
 ```
-
-If we consider a white surface to be represented by 1 and a black surface to be represented by a 0, sliding the sensor above a white line drawn above the black surface  
 
 ## Parallel to Serial adapter for Line Sensor Array
+
+A microcontroller may not have enough digital pins to read all the 12 bits of data from the line sensor array. This parallel output from the line sensor array must be converted to serial data such that the microcontroller can interface with the sensor using only a few pins. 
+One such device for reading multiple inputs, using only 4 gpio pins of a microcontroller, is a shift register.  
+
+For instance, an 8 bit shift regsiter, like 74HC165, can read upto 8 digital inputs. Hence for reading the 12 bit data from the line sensor array, at least two of these 8-bit shift registers will be required.
+74HC165 shift registers have the ability to be cascaded with another shift register in a way that using only one data pin, a microcontroller can read data from all the shift registers. 
+
+The adapter pcb houses two *daisy chained* shift registers and the serial output connector has the necessary pins that allows any microcontroller to read the Serial data. 
+As shown in the [pinout](/Image_assets/adapter_pinout.png), the adapter outputs 16-bit data out of which 12 bits in the middle represent the digital output from the line sensor array and two bits from either side are dummy bits.
+
 
 <br/>
 
@@ -118,6 +169,8 @@ If we consider a white surface to be represented by 1 and a black surface to be 
 </p>
 
 ## Neopixel Array & Buzzer board
+
+This board is a smalll pcb strip which has 6 WS2812B Neopixel RGB LEDs and a 5V buzzer. As shown in the [pinout](/Image_assets/indication_board_pinout.png), the connector with 4 pins acts as the input for the first neopixel leds and the buzzer. This board also has an output to extend the chain of LED array. Thus allowing an LED string to be connected with this board. However it is important to note that this board may have a limited ouput power. Thus limiting the number of LEDs that can be extended with this board.  
 
 <br/>
 
@@ -128,6 +181,13 @@ If we consider a white surface to be represented by 1 and a black surface to be 
 <br/>
 
 ## OLED based GUI board
+
+A robot built with the Glider v1.0 may require configurations to made dynamically, in other words, configurations without re-uplaoding the firmware. Such frequent configurations can be made either wirelessly, or via an onboard GUI. This roboboard is capbale of implementing both the approach. However, an onboard GUI doesn't always require a persistent wireless connection.
+
+This GUI board has 4 smd button which can help users to navigate through a menu, which can possibly be displayed on a SSD1306 OLED display. To ensure robustness and utilize the pcb-real estate, this board also includes required circuitry for button debouncing allowing interrupt based programs can run flawlessly.
+
+On the left side of the pcb, female headers are present to allow SSD1306 based OLED displays to connect. Therefore this board serves most functionalities of a GUI board. Besides, the outline of this board is designed in such a way that it can be stacked up on the robobaord using 4 nuts, bolts, and spacers and connect with the roboboard via a 9 pin JST cable. Please check the [pinout](/Image_assets/gui_board_pinout.png) for the gui board connector.
+
 
 <br/>
 
@@ -141,7 +201,7 @@ If we consider a white surface to be represented by 1 and a black surface to be 
 
 Following are the links to the images that describe each of the pins of the connectors on the respective boards : 
 
-1. [Roboboard pinout](/Image_assets/Roboboard_Connector_Overview.png)
+1. [Roboboard pinout](/Image_assets/roboboard_pinout.png)
 2. [Line sensor adapter pinout](/Image_assets/adapter_pinout.png)
 3. [Indication pinout](/Image_assets/indication_board_pinout.png)
-4. [GUI pinout](/Image_assets/gui_board_pinout.png)
+4. [GUI board pinout](/Image_assets/gui_board_pinout.png)
