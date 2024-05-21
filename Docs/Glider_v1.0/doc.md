@@ -205,3 +205,15 @@ Following are the links to the images that describe each of the pins of the conn
 2. [Line sensor adapter pinout](/Image_assets/adapter_pinout.png)
 3. [Indication pinout](/Image_assets/indication_board_pinout.png)
 4. [GUI board pinout](/Image_assets/gui_board_pinout.png)
+
+## Projects 
+
+Unlike most roboboards designed for specific project. The Glider v1.0 board allows users to build several other robots like : 
+* Hexapod 
+* Quadcopter
+* Self-balancing robot
+
+However, Line Following robots are the entry point to get started with robotics. The kit comes along with a 12 channel line sensor array which allows makers to build a Line Follower Robot. This repository contains the [source code for an LFR](/Code_examples/Glider_v1.0/PlatformIO_projects/Line_Follower_Robot/), as a platformIO project, and the same for other projects to get started.
+
+![Line Follower Robot In Action](/Image_assets/glider_v1.0_lfr.gif)
+
